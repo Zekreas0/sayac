@@ -73,13 +73,18 @@
             height: 100%;
             z-index: 1;
             object-fit: cover;
-            display: none; /* Video'nun görünmesini engelle */
+            visibility: hidden; /* Video'yu görünmez yap */
         }
     </style>
 </head>
 <body>
-    <iframe width="1" height="1" src="https://www.youtube.com/embed/zokvi67Yko0?autoplay=1&mute=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-
+    <!-- YouTube Video Embed Kodu (Arka Plan Müzik) -->
+    <iframe class="video-background" 
+            src="https://www.youtube.com/embed/zokvi67Yko0?autoplay=1&loop=1&playlist=zokvi67Yko0&mute=0" 
+            frameborder="0" 
+            allow="autoplay; encrypted-media" 
+            allowfullscreen>
+    </iframe>
 
     <div id="countdown">
         <h1 style="font-size:35px;">Dilmonun Sakarya'ya Gitmesine Kalan Süre:</h1>
