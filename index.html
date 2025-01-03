@@ -146,6 +146,7 @@
                 },
                 events: {
                     onReady: function(event) {
+                        event.target.setVolume(10); // Ses seviyesi (0 - 100 arasında)
                         event.target.playVideo();
                     }
                 }
