@@ -77,10 +77,13 @@
 </head>
 <body>
     <!-- YouTube Video Embed Kodu (Arka Plan Müzik) -->
-    <audio id="player">
-    <source src="sarki.mp3" type="audio/mpeg">
-    </audio>
-    <div id="player"></div>
+    <iframe class="video-background" 
+            src="https://www.youtube.com/embed/zokvi67Yko0?autoplay=1&loop=1&playlist=zokvi67Yko0&mute=0" 
+            frameborder="0" 
+            allow="autoplay; encrypted-media" 
+            allowfullscreen>
+    </iframe>
+
     <div id="countdown">
         <h1 style="font-size:35px;">Dilmonun Sakarya'ya Gitmesine Kalan Süre:</h1>
         <div class="row">
@@ -98,7 +101,6 @@
             </div>
         </div>
     </div>
-
 
     <!-- Bootstrap JS Bağlantısı -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
@@ -123,34 +125,6 @@
 
         // Sayaç her saniye güncellenecek
         setInterval(updateCountdown, 1000);
-
-
-        // YouTube API'yi yükle
-        var tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-        // YouTube Player'ı oluştur
-        var player;
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('player', {
-                height: '0', // Görünür olmaması için
-                width: '0',
-                videoId: 'w2xi6Qjv8mw', // Oynatmak istediğiniz videonun ID'sini buraya koyun
-                playerVars: {
-                    autoplay: 1, // Otomatik oynatma
-                    controls: 0, // Kontrolleri gizle
-                    loop: 1, // Döngü
-                    playlist: 'w2xi6Qjv8mw' // Döngü için tekrar video ID'si
-                },
-                events: {
-                    onReady: function(event) {
-                        event.target.playVideo();
-                    }
-                }
-            });
-        }
     </script>
 </body>
 </html>
