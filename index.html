@@ -123,6 +123,34 @@
 
         // Sayaç her saniye güncellenecek
         setInterval(updateCountdown, 1000);
+
+        
+        // YouTube API'yi yükle
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        // YouTube Player'ı oluştur
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '0', // Görünür olmaması için
+                width: '0',
+                videoId: 'w2xi6Qjv8mw', // Oynatmak istediğiniz videonun ID'sini buraya koyun
+                playerVars: {
+                    autoplay: 1, // Otomatik oynatma
+                    controls: 0, // Kontrolleri gizle
+                    loop: 1, // Döngü
+                    playlist: 'w2xi6Qjv8mw' // Döngü için tekrar video ID'si
+                },
+                events: {
+                    onReady: function(event) {
+                        event.target.playVideo();
+                    }
+                }
+            });
+        }
     </script>
 </body>
 </html>
