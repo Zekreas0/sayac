@@ -72,12 +72,19 @@
             width: 100%;
             height: 100%;
             z-index: 1;
-            object-fit: cover;        }
+            object-fit: cover;
+            visibility: hidden; /* Video'yu görünmez yap */
+        }
     </style>
 </head>
 <body>
     <!-- YouTube Video Embed Kodu (Arka Plan Müzik) -->
-    <iframe src="https://www.youtube.com/embed/w2xi6Qjv8mw" title="Neon Genesis Evangelion - Fly me to the moon." frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <iframe class="video-background" 
+            src="https://www.youtube.com/embed/zokvi67Yko0?autoplay=1&loop=1&playlist=zokvi67Yko0&mute=0" 
+            frameborder="0" 
+            allow="autoplay; encrypted-media" 
+            allowfullscreen>
+    </iframe>
 
     <div id="countdown">
         <h1 style="font-size:35px;">Dilmonun Sakarya'ya Gitmesine Kalan Süre:</h1>
