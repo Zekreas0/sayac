@@ -62,9 +62,21 @@
         .col .time {
             flex: 1;
         }
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1; /* Sayaç video'nun üstünde olacak */
+            object-fit: cover;
+        }
     </style>
 </head>
 <body>
+    <iframe class="video-background" src="https://www.youtube.com/embed/Ixi0sUpLVRc?autoplay=1&loop=1&playlist=Ixi0sUpLVRc" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+    
     <div id="countdown">
         <h1 style="font-size:35px;">Dilmonun sakaryaya gitmesine kalan süre:</h1>
         <div class="row">
