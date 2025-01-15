@@ -11,10 +11,10 @@
         body {
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
-            background-image: url('https://raw.githubusercontent.com/Zekreas0/sayac/refs/heads/main/avrupada-son-500-yilin-en-kurak-donemi-yasaniyor-VwZP.jpg'); /* Resim URL'sini buraya yazın */
-            background-size: contain; /* Resim boyutunu ayarla */
-            background-position: center; /* Resmi ortala */
-            background-repeat: no-repeat; /* Resmin tekrar etmesini engelle */
+            background-image: url('https://raw.githubusercontent.com/Zekreas0/sayac/refs/heads/main/avrupada-son-500-yilin-en-kurak-donemi-yasaniyor-VwZP.jpg');
+            background-size: contain;
+    		background-position: center;
+    		background-repeat: no-repeat;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -25,30 +25,28 @@
 
         #countdown {
             text-align: center;
-            padding: 30px;
-            background-color: #fff;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9); /* Arka planı biraz şeffaf yap */
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            width: 100%;
+            width: 90%; /* Mobilde genişlik ayarı */
             max-width: 900px;
             z-index: 2;
         }
 
         h1 {
-            font-size: 1.75rem;
+            font-size: 1.5rem;
             color: #333;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .time {
-            font-size: 2.5rem;
+            font-size: 1.5rem;
             margin: 10px;
-            padding: 20px;
+            padding: 15px;
             background-color: #4CAF50;
             color: white;
             border-radius: 10px;
-            min-width: 150px;
-            max-width: 200px;
             text-align: center;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
@@ -56,34 +54,36 @@
         .row {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 10px; /* Mobilde elemanlar arası boşluk azaltıldı */
+            flex-wrap: wrap; /* Elemanlar taşarsa alt satıra geçsin */
         }
 
         .col {
+            flex: 1 1 100px; /* Elemanlar esnek genişlikte olsun */
             display: flex;
             justify-content: center;
-            align-items: center;
         }
 
-        .col .time {
-            flex: 1;
-        }
+        /* Mobil cihazlar için stil */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.25rem; /* Başlık boyutunu küçült */
+            }
 
-        .video-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            object-fit: cover;
+            .time {
+                font-size: 1.25rem; /* Sayaç boyutunu küçült */
+                padding: 10px; /* İç boşluğu azalt */
+            }
+
+            .row {
+                gap: 5px; /* Mobilde daha az boşluk bırak */
+            }
         }
     </style>
 </head>
 <body>
-
     <div id="countdown">
-        <h1 style="font-size:35px;">Sakaryanın Dilmoya Gitmesine Kalan Süre</h1>
+        <h1>Sakaryanın Dilmoya Gitmesine Kalan Süre</h1>
         <div class="row">
             <div class="col">
                 <div class="time" id="days"></div>
