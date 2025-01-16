@@ -297,20 +297,19 @@ function GameOver(result)
 		//success
 		case 0:
 			oImgFace.src = "images/win.gif";
-			alert("Awesome! You have cleared " + mine_count + " mines in only " + oRightBox.innerText + " seconds!");
+			alert("Kazandın! Sadece " + mine_count + " mayını " + oRightBox.innerText + " saniye de temizledin!");
 			window.clearInterval(timer_id)
 			break;
 		//failure
 		case 1:
 			ExpandAll();
 			oImgFace.src = "images/blast.gif";
-			alert("You lose, please try again!");
 			window.clearInterval(timer_id)
 			//RefreshMainFrame();
 			break;
 		//timeout
 		case 2:
-			alert("Come on! What takes you so long to finish? Please retry!");
+			alert("Hadi bitirmene ne kadar kaldı?!");
 			oImgFace.src = "images/blast.gif";
 			window.clearInterval(timer_id)
 			//RefreshMainFrame();
