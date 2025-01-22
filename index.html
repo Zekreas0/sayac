@@ -67,6 +67,19 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
+        .row {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .col {
+            flex: 1 1 100px;
+            display: flex;
+            justify-content: center;
+        }
+
         .theme-toggle {
             position: absolute;
             top: 10px;
@@ -80,39 +93,61 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
-        #ad-popup {
-            display: none;
+        .theme-toggle:hover {
+            opacity: 0.8;
+        }
+
+        #mine-view-container {
             position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 250px;
+            height: 290px;
+            border: 1px solid var(--text-color);
+            border-radius: 10px;
+            overflow: hidden;
+            z-index: 10;
+            background-color: var(--card-background);
+            display: none; /* Başlangıçta gizli */
+        }
+
+        .toggle-iframe-button {
+            position: fixed;
+            bottom: 300px;
+            left: 10px;
+            z-index: 11;
+            background-color: var(--card-background);
+            color: var(--text-color);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .toggle-iframe-button:hover {
+            opacity: 0.8;
+        }
+
+        .popup {
+            position: absolute;
             background-color: var(--card-background);
             color: var(--text-color);
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            z-index: 1000;
-            width: 300px;
-            height: 200px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 100;
         }
 
-        #ad-popup button {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: none;
-            border: none;
+        .popup a {
             color: var(--text-color);
-            font-size: 16px;
-            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
         }
 
-        #ad-popup a {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 15px;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
+        .popup a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -121,21 +156,47 @@
 
     <div id="countdown">
         <h1>Arda Dilmac Suanda SAKARYA DA 🤩🤩🤩</h1>
+        <div class="row">
         <img src="https://www.turktraktor.com.tr/getattachment/95029b91-1da7-4926-8cab-50894cae27fc/NH-T5-BLM_web.png?lang=tr-TR&width=600&height=500&ext=.png" alt="NH T5 BLM" width="600" height="500">
+            
+        </div>
     </div>
 
-    <!-- Reklam Popup -->
-    <div id="ad-popup">
-        <button onclick="closeAd()">✖</button>
-        <h2>Bedava Minecraft!</h2>
-        <p>Hemen tıklayın ve başlayın.</p>
-        <a href="https://www.youtube.com" target="_blank">YouTube'a Git</a>
+    <!-- İframe kontrol düğmesi -->
+    <button class="toggle-iframe-button" onclick="toggleIframe()">Beklerken Oyun Oyna</button>
+
+    <!-- Mine.View.html dosyasını sabitleme -->
+    <div id="mine-view-container">
+        <iframe src="Mine.View.html" width="100%" height="100%" style="border: none;"></iframe>
+    </div>
+
+    <!-- Reklam pop-up -->
+    <div id="popup" class="popup">
+        <p>Minecraft İndir! <a href="https://www.youtube.com/" target="_blank">Buraya tıkla</a></p>
     </div>
 
     <!-- Bootstrap JS Bağlantısı -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
+        function updateCountdown() {
+            const targetDate = new Date("2025-01-17T10:00:00");
+            const now = new Date();
+            const timeDiff = targetDate - now;
+
+            const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerHTML = days + " Gün";
+            document.getElementById("hours").innerHTML = hours + " Saat";
+            document.getElementById("minutes").innerHTML = minutes + " Dakika";
+            document.getElementById("seconds").innerHTML = seconds + " Saniye";
+        }
+
+        setInterval(updateCountdown, 1000);
+
         function toggleTheme() {
             const body = document.body;
             const currentTheme = body.getAttribute("data-theme");
@@ -146,35 +207,27 @@
             button.innerHTML = newTheme === "light" ? "🌙 Karanlık Mod" : "☀️ Aydınlık Mod";
         }
 
-        function showAd() {
-            const adPopup = document.getElementById("ad-popup");
-
-            // Rastgele pozisyon oluştur
-            const windowWidth = window.innerWidth;
-            const windowHeight = window.innerHeight;
-            const adWidth = 300;
-            const adHeight = 200;
-
-            const randomLeft = Math.floor(Math.random() * (windowWidth - adWidth));
-            const randomTop = Math.floor(Math.random() * (windowHeight - adHeight));
-
-            adPopup.style.left = `${randomLeft}px`;
-            adPopup.style.top = `${randomTop}px`;
-
-            // Reklamı göster
-            adPopup.style.display = "block";
+        function toggleIframe() {
+            const iframeContainer = document.getElementById("mine-view-container");
+            const isVisible = iframeContainer.style.display === "block";
+            iframeContainer.style.display = isVisible ? "none" : "block";
         }
 
-        function closeAd() {
-            const adPopup = document.getElementById("ad-popup");
-            adPopup.style.display = "none";
+        function showPopup() {
+            const popup = document.getElementById("popup");
+            const x = Math.random() * (window.innerWidth - 200);
+            const y = Math.random() * (window.innerHeight - 100);
 
-            // 15 saniye sonra tekrar göster
-            setTimeout(showAd, 15000);
+            popup.style.left = x + "px";
+            popup.style.top = y + "px";
+            popup.style.display = "block";
+
+            setTimeout(() => {
+                popup.style.display = "none";
+            }, 5000);
         }
 
-        // 15 saniye sonra reklamı ilk kez göster
-        setTimeout(showAd, 15000);
+        setInterval(showPopup, 15000);
     </script>
 </body>
 </html>
