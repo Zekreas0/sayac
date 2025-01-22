@@ -149,6 +149,21 @@
         .popup a:hover {
             text-decoration: underline;
         }
+
+        .popup .close-btn {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .popup .close-btn:hover {
+            opacity: 0.7;
+        }
     </style>
 </head>
 <body data-theme="light">
@@ -172,6 +187,7 @@
 
     <!-- Reklam pop-up -->
     <div id="popup" class="popup">
+        <button class="close-btn" onclick="closePopup()">✖</button>
         <p>Minecraft İndir! <a href="https://www.youtube.com/" target="_blank">Buraya tıkla</a></p>
     </div>
 
@@ -221,13 +237,9 @@
             popup.style.left = x + "px";
             popup.style.top = y + "px";
             popup.style.display = "block";
-
-            setTimeout(() => {
-                popup.style.display = "none";
-            }, 5000);
         }
 
-        setInterval(showPopup, 15000);
-    </script>
-</body>
-</html>
+        function closePopup() {
+            const popup = document.getElementById("popup");
+            popup.style.display = "none";
+       
