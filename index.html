@@ -128,42 +128,6 @@
         .toggle-iframe-button:hover {
             opacity: 0.8;
         }
-
-        .popup {
-            position: absolute;
-            background-color: var(--card-background);
-            color: var(--text-color);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            display: none;
-            z-index: 100;
-        }
-
-        .popup a {
-            color: var(--text-color);
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .popup a:hover {
-            text-decoration: underline;
-        }
-
-        .popup .close-btn {
-            position: absolute;
-            top: 5px;
-            right: 10px;
-            background: none;
-            border: none;
-            color: var(--text-color);
-            font-size: 1rem;
-            cursor: pointer;
-        }
-
-        .popup .close-btn:hover {
-            opacity: 0.7;
-        }
     </style>
 </head>
 <body data-theme="light">
@@ -183,12 +147,6 @@
     <!-- Mine.View.html dosyasını sabitleme -->
     <div id="mine-view-container">
         <iframe src="Mine.View.html" width="100%" height="100%" style="border: none;"></iframe>
-    </div>
-
-    <!-- Reklam pop-up -->
-    <div id="popup" class="popup">
-        <button class="close-btn" onclick="closePopup()">✖</button>
-        <p>Minecraft İndir! <a href="https://www.youtube.com/@ArchuraMC1/videos/" target="_blank">Buraya tıkla</a></p>
     </div>
 
     <!-- Bootstrap JS Bağlantısı -->
@@ -228,18 +186,6 @@
             const isVisible = iframeContainer.style.display === "block";
             iframeContainer.style.display = isVisible ? "none" : "block";
         }
-
-        function showPopup() {
-            const popup = document.getElementById("popup");
-            const x = Math.random() * (window.innerWidth - 200);
-            const y = Math.random() * (window.innerHeight - 100);
-
-            popup.style.left = x + "px";
-            popup.style.top = y + "px";
-            popup.style.display = "block";
-        }
-
-        function closePopup() {
-            const popup = document.getElementById("popup");
-            popup.style.display = "none";
-       
+    </script>
+</body>
+</html>
