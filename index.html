@@ -55,7 +55,7 @@
         }
         .toggle-iframe-button {
             position: fixed;
-            z-index: 11;
+            z-index: 12;  /* Diğer butonların önünde olmasını sağlar */
             background-color: var(--card-background);
             color: var(--text-color);
             border: none;
@@ -67,28 +67,36 @@
         .toggle-iframe-button:hover {
             opacity: 0.8;
         }
-        #mine-view-container, #snake-game-container, #doom-game-container {
+        #mine-view-container, #snake-game-container {
             position: fixed;
             width: 100%;
             height: 100%;
-            border: 1px solid var(--text-color);
-            border-radius: 10px;
-            overflow: hidden;
+            border: none;
             z-index: 10;
             background-color: var(--card-background);
             display: none;
+            top: 0;
+            left: 0;
         }
-        .close-button {
-            position: absolute;
+        .mine-button { bottom: 300px; left: 10px; }
+        .snake-button { bottom: 300px; right: 10px; }
+
+        .doom-button {
+            position: fixed;
             top: 10px;
-            right: 10px;
-            background-color: red;
+            left: 10px;
+            background-color: #333;
             color: white;
             border: none;
-            padding: 5px 10px;
+            padding: 10px;
             border-radius: 5px;
             cursor: pointer;
+            z-index: 12;
         }
+        .doom-button:hover {
+            opacity: 0.8;
+        }
+
         .dark-mode-button {
             position: fixed;
             top: 10px;
@@ -104,12 +112,36 @@
         .dark-mode-button:hover {
             opacity: 0.8;
         }
+
+        /* Kapatma Butonları için yeni düzenleme */
+        .close-button {
+            position: absolute;
+            top: 40px;  /* Daha aşağıya kaydırdık */
+            right: 10px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            z-index: 13;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .close-button:hover {
+            opacity: 0.8;
+        }
     </style>
 </head>
 <body data-theme="light">
     <button class="toggle-iframe-button mine-button" id="mineButton" onclick="toggleIframe('mine-view-container', 'mineButton')">Mayın Tarlası</button>
     <button class="toggle-iframe-button snake-button" id="snakeButton" onclick="toggleIframe('snake-game-container', 'snakeButton')">Yılan Oyna</button>
-    <button class="toggle-iframe-button doom-button" id="doomButton" onclick="toggleIframe('doom-game-container', 'doomButton')">Doom Oyna</button>
+    
+    <!-- Doom Oyna Butonu -->
+    <a href="doom.html" target="_blank">
+        <button class="doom-button">Doom Oyna</button>
+    </a>
+
     <div id="countdown">
         <h1 style="font-size:35px;">Sakaryanın Dilmoya Gitmesine Kalan Süre</h1>
         <div class="row">
@@ -119,19 +151,18 @@
             <div class="col"><div class="time" id="seconds"></div></div>
         </div>
     </div>
+
     <div id="mine-view-container">
-        <button class="close-button" onclick="closeIframe('mine-view-container', 'mineButton')">Kapat</button>
+        <button class="close-button" onclick="closeIframe('mine-view-container', 'mineButton')">X</button>
         <iframe src="Mine.View.html" width="100%" height="100%" style="border: none;"></iframe>
     </div>
     <div id="snake-game-container">
-        <button class="close-button" onclick="closeIframe('snake-game-container', 'snakeButton')">Kapat</button>
+        <button class="close-button" onclick="closeIframe('snake-game-container', 'snakeButton')">X</button>
         <iframe src="snake.html" width="100%" height="100%" style="border: none; overflow: hidden;"></iframe>
     </div>
-    <div id="doom-game-container">
-        <button class="close-button" onclick="closeIframe('doom-game-container', 'doomButton')">Kapat</button>
-        <iframe src="doom/doom.html" width="100%" height="100%" style="border: none; overflow: hidden;"></iframe>
-    </div>
+
     <button class="dark-mode-button" onclick="toggleDarkMode()">Karanlık Mod</button>
+
     <script>
         function updateCountdown() {
             const targetDate = new Date("2025-06-20T00:00:00");
@@ -150,10 +181,8 @@
             const isVisible = iframeContainer.style.display === "block";
             document.getElementById("mine-view-container").style.display = "none";
             document.getElementById("snake-game-container").style.display = "none";
-            document.getElementById("doom-game-container").style.display = "none";
             document.getElementById("mineButton").style.display = "block";
             document.getElementById("snakeButton").style.display = "block";
-            document.getElementById("doomButton").style.display = "block";
             iframeContainer.style.display = isVisible ? "none" : "block";
             iframeButton.style.display = isVisible ? "block" : "none";  // Hide the button when iframe is opened
         }
