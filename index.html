@@ -11,12 +11,14 @@
             --text-color: #333;
             --card-background: rgba(255, 255, 255, 0.9);
             --time-background: #4CAF50;
+            --background-image: url('avrupada-son-500-yilin-en-kurak-donemi-yasaniyor-VwZP.jpg');
         }
         [data-theme="dark"] {
             --background-color: #121212;
             --text-color: #f1f1f1;
             --card-background: rgba(0, 0, 0, 0.8);
             --time-background: #8bc34a;
+            --background-image: url('sakaryasiyah.jpg');
         }
         body {
             font-family: Arial, sans-serif;
@@ -30,6 +32,9 @@
             position: relative;
             overflow: hidden;
             padding: 0;
+            background-image: var(--background-image);
+            background-size: cover;
+            background-position: center;
         }
         #countdown {
             text-align: center;
@@ -100,6 +105,21 @@
             border-radius: 5px;
             cursor: pointer;
         }
+        .dark-mode-button {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 12;
+        }
+        .dark-mode-button:hover {
+            opacity: 0.8;
+        }
     </style>
 </head>
 <body data-theme="light">
@@ -122,6 +142,7 @@
         <button class="close-button" onclick="closeIframe('snake-game-container', 'snakeButton')">Kapat</button>
         <iframe src="snake.html" width="100%" height="100%" style="border: none; overflow: hidden;"></iframe>
     </div>
+    <button class="dark-mode-button" onclick="toggleDarkMode()">Karanlık Mod</button>
     <script>
         function updateCountdown() {
             const targetDate = new Date("2025-06-20T00:00:00");
@@ -149,6 +170,16 @@
         function closeIframe(containerId, buttonId) {
             document.getElementById(containerId).style.display = "none";
             document.getElementById(buttonId).style.display = "block";  // Show the button again
+        }
+
+        function toggleDarkMode() {
+            const body = document.body;
+            const currentTheme = body.getAttribute("data-theme");
+            if (currentTheme === "light") {
+                body.setAttribute("data-theme", "dark");
+            } else {
+                body.setAttribute("data-theme", "light");
+            }
         }
     </script>
 </body>
