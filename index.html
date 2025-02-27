@@ -6,6 +6,24 @@
     <title>Sayaç ve Oyunlar</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 20px; /* Sayaçlar arasındaki boşluk */
+}
+
+.countdown-box {
+    width: 90%;
+    max-width: 900px;
+    text-align: center;
+    padding: 20px;
+    background-color: var(--card-background);
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
         :root {
             --background-color: #f8f9fa;
             --text-color: #333;
@@ -142,7 +160,8 @@
         <button class="doom-button">Doom Oyna</button>
     </a>
 
-    <div id="countdown">
+    <div class="container">
+    <div class="countdown-box">
         <h1 style="font-size:35px;">Sakaryanın Dilmoya Gitmesine Kalan Süre</h1>
         <div class="row">
             <div class="col"><div class="time" id="days"></div></div>
@@ -151,6 +170,17 @@
             <div class="col"><div class="time" id="seconds"></div></div>
         </div>
     </div>
+
+    <div class="countdown-box">
+        <h1 style="font-size:35px;">Sakaryanın 1 haftaya dilmo gitmesine süre kalan</h1>
+        <div class="row">
+            <div class="col"><div class="time" id="dayss"></div></div>
+            <div class="col"><div class="time" id="hourss"></div></div>
+            <div class="col"><div class="time" id="minutess"></div></div>
+            <div class="col"><div class="time" id="secondss"></div></div>
+        </div>
+    </div>
+</div>
 
     <div id="mine-view-container">
         <button class="close-button" onclick="closeIframe('mine-view-container', 'mineButton')">X</button>
@@ -174,6 +204,16 @@
             document.getElementById("seconds").innerHTML = Math.floor((timeDiff % (1000 * 60)) / 1000) + " Saniye";
         }
         setInterval(updateCountdown, 1000);
+	function updateCCountdown() {
+            const ttargetDate = new Date("2025-03-21T00:00:00");
+            const nnow = new Date();
+            const ttimeDiff = ttargetDate - nnow;
+            document.getElementById("dayss").innerHTML = Math.floor(ttimeDiff / (1000 * 60 * 60 * 24)) + " Gün";
+            document.getElementById("hourss").innerHTML = Math.floor((ttimeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) + " Saat";
+            document.getElementById("minutess").innerHTML = Math.floor((ttimeDiff % (1000 * 60 * 60)) / (1000 * 60)) + " Dakika";
+            document.getElementById("secondss").innerHTML = Math.floor((ttimeDiff % (1000 * 60)) / 1000) + " Saniye";
+        }
+        setInterval(updateCCountdown, 1000);
 
         function toggleIframe(containerId, buttonId) {
             const iframeContainer = document.getElementById(containerId);
