@@ -172,12 +172,9 @@
     </div>
 
     <div class="countdown-box">
-        <h1 style="font-size:35px;">Sakaryanın 1 haftaya dilmo gitmesine süre kalan</h1>
+        <h1 style="font-size:35px;">Sakaryanın Dilmoya Gitmesine Kalan Hafta</h1>
         <div class="row">
-            <div class="col"><div class="time" id="dayss"></div></div>
-            <div class="col"><div class="time" id="hourss"></div></div>
-            <div class="col"><div class="time" id="minutess"></div></div>
-            <div class="col"><div class="time" id="secondss"></div></div>
+            <div class="col"><div class="time" id="week"></div></div>
         </div>
     </div>
 </div>
@@ -208,10 +205,7 @@
             const ttargetDate = new Date("2025-03-28T17:00:00");
             const nnow = new Date();
             const ttimeDiff = ttargetDate - nnow;
-            document.getElementById("dayss").innerHTML = Math.floor(ttimeDiff / (1000 * 60 * 60 * 24)) + " Gün";
-            document.getElementById("hourss").innerHTML = Math.floor((ttimeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) + " Saat";
-            document.getElementById("minutess").innerHTML = Math.floor((ttimeDiff % (1000 * 60 * 60)) / (1000 * 60)) + " Dakika";
-            document.getElementById("secondss").innerHTML = Math.floor((ttimeDiff % (1000 * 60)) / 1000) + " Saniye";
+            document.getElementById("week").innerHTML = Math.floor(ttimeDiff / (1000 * 60 * 60 * 24)) / (7) + " Gün";
         }
         setInterval(updateCCountdown, 1000);
 
