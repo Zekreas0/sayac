@@ -175,6 +175,7 @@
         <h1 style="font-size:35px;">Sakaryanın Dilmoya Gitmesine Kalan Hafta</h1>
         <div class="row">
             <div class="col"><div class="time" id="week"></div></div>
+            <div class="col"><div class="time" id="month"></div></div>
         </div>
     </div>
 </div>
@@ -206,6 +207,7 @@
             const nnow = new Date();
             const ttimeDiff = ttargetDate - nnow;
 	    document.getElementById("week").innerHTML = Math.floor(ttimeDiff / (1000 * 60 * 60 * 24 * 7)) + " Hafta";
+	    document.getElementById("month").innerHTML = (ttimeDiff / (1000 * 60 * 60 * 24 * 30)).toFixed(1) + " Ay";
         }
         setInterval(updateCCountdown, 1000);
 
