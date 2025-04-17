@@ -5,87 +5,218 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sayaç ve Oyunlar</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    gap: 20px; /* Sayaçlar arasındaki boşluk */
-}
-
-.countdown-box {
-    width: 90%;
-    max-width: 900px;
-    text-align: center;
-    padding: 20px;
-    background-color: var(--card-background);
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
         :root {
             --background-color: #f8f9fa;
             --text-color: #333;
-            --card-background: rgba(255, 255, 255, 0.9);
+            --card-background: rgba(255, 255, 255, 0.92);
             --time-background: #4CAF50;
+            --progress-color: #4CAF50;
+            --button-color: #4CAF50;
+            --button-hover: #3e8e41;
             --background-image: url('avrupada-son-500-yilin-en-kurak-donemi-yasaniyor-VwZP.jpg');
+            --box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
+        
         [data-theme="dark"] {
             --background-color: #121212;
             --text-color: #f1f1f1;
-            --card-background: rgba(0, 0, 0, 0.8);
+            --card-background: rgba(30, 30, 30, 0.92);
             --time-background: #8bc34a;
+            --progress-color: #8bc34a;
+            --button-color: #8bc34a;
+            --button-hover: #689f38;
             --background-image: url('sakaryasiyah.jpg');
+            --box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
+        
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--background-color);
             color: var(--text-color);
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
-            position: relative;
-            overflow: hidden;
-            padding: 0;
+            padding: 20px;
             background-image: var(--background-image);
             background-size: cover;
             background-position: center;
+            background-attachment: fixed;
+            position: relative;
         }
-        #countdown {
-            text-align: center;
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            z-index: -1;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 1000px;
+            gap: 25px;
             padding: 20px;
-            background-color: var(--card-background);
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            width: 90%;
-            max-width: 900px;
         }
+        
+        .countdown-box {
+            width: 100%;
+            text-align: center;
+            padding: 25px;
+            background-color: var(--card-background);
+            border-radius: 15px;
+            box-shadow: var(--box-shadow);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            transition: transform 0.3s ease;
+        }
+        
+        .countdown-box:hover {
+            transform: translateY(-5px);
+        }
+        
+        h1 {
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            margin-bottom: 20px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+        
+        .time-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .time-unit {
+            flex: 1;
+            min-width: 120px;
+            max-width: 200px;
+        }
+        
         .time {
-            font-size: 1.5rem;
-            padding: 15px;
+            font-size: clamp(1.2rem, 5vw, 2rem);
+            padding: 15px 10px;
             background-color: var(--time-background);
             color: white;
             border-radius: 10px;
             text-align: center;
+            margin-bottom: 5px;
+            font-weight: 700;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        .toggle-iframe-button {
-            position: fixed;
-            z-index: 12;  /* Diğer butonların önünde olmasını sağlar */
-            background-color: var(--card-background);
+        
+        .time-label {
+            font-size: 0.9rem;
             color: var(--text-color);
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-        .toggle-iframe-button:hover {
             opacity: 0.8;
         }
-        #mine-view-container, #snake-game-container {
+        
+        .progress-container {
+            margin-top: 30px;
+        }
+        
+        .progress {
+            height: 25px;
+            border-radius: 12px;
+            background-color: rgba(0, 0, 0, 0.1);
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        
+        .progress-bar {
+            background-color: var(--progress-color);
+            border-radius: 12px;
+        }
+        
+        #percentage {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--progress-color);
+        }
+        
+        .game-button {
+            position: fixed;
+            z-index: 12;
+            background-color: var(--button-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: var(--box-shadow);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .game-button:hover {
+            background-color: var(--button-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        #mineButton {
+            bottom: 20px;
+            left: 20px;
+        }
+        
+        #snakeButton {
+            bottom: 20px;
+            right: 20px;
+        }
+        
+        .doom-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            z-index: 12;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .dark-mode-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--button-color);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 12;
+            box-shadow: var(--box-shadow);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .iframe-container {
             position: fixed;
             width: 100%;
             height: 100%;
@@ -96,202 +227,236 @@
             top: 0;
             left: 0;
         }
-        .mine-button { bottom: 300px; left: 10px; }
-        .snake-button { bottom: 300px; right: 10px; }
-
-        .doom-button {
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            background-color: #333;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            z-index: 12;
-        }
-        .doom-button:hover {
-            opacity: 0.8;
-        }
-
-        .dark-mode-button {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            background-color: #333;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            z-index: 12;
-        }
-        .dark-mode-button:hover {
-            opacity: 0.8;
-        }
-
-        /* Kapatma Butonları için yeni düzenleme */
+        
         .close-button {
             position: absolute;
-            top: 40px;  /* Daha aşağıya kaydırdık */
-            right: 10px;
+            top: 80px;  /* 20px'den 80px yaparak karanlık mod butonunun altına kaydırdık */
+            right: 20px;
             background-color: #f44336;
             color: white;
             border: none;
-            padding: 8px 12px;
-            border-radius: 50%;
+            padding: 10px 15px;
+            border-radius: 50px;
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 1rem;
             z-index: 13;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: var(--box-shadow);
         }
-        .close-button:hover {
-            opacity: 0.8;
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .countdown-box {
+                padding: 20px 15px;
+            }
+            
+            .time-unit {
+                min-width: 80px;
+            }
+            
+            .time {
+                font-size: 1.2rem;
+                padding: 10px 5px;
+            }
+            
+            .game-button {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+            
+            #mineButton {
+                bottom: 70px;
+                left: 10px;
+            }
+            
+            #snakeButton {
+                bottom: 70px;
+                right: 10px;
+            }
         }
     </style>
 </head>
 <body data-theme="light">
-    <button class="toggle-iframe-button mine-button" id="mineButton" onclick="toggleIframe('mine-view-container', 'mineButton')">Mayın Tarlası</button>
-    <button class="toggle-iframe-button snake-button" id="snakeButton" onclick="toggleIframe('snake-game-container', 'snakeButton')">Yılan Oyna</button>
+    <button class="game-button" id="mineButton" onclick="toggleIframe('mine-view-container', 'mineButton')">
+        <i class="fas fa-bomb"></i> Mayın Tarlası
+    </button>
     
-    <!-- Doom Oyna Butonu -->
+    <button class="game-button" id="snakeButton" onclick="toggleIframe('snake-game-container', 'snakeButton')">
+        <i class="fas fa-snake"></i> Yılan Oyna
+    </button>
+    
     <a href="doom.html" target="_blank">
-        <button class="doom-button">Doom Oyna</button>
+        <button class="doom-button">
+            <i class="fas fa-gamepad"></i> Doom Oyna
+        </button>
     </a>
 
     <div class="container">
-    <div class="countdown-box">
-        <h1 style="font-size:35px;">Sakaryanın Dilmoya Gitmesine Kalan Süre</h1>
-        <div class="row">
-            <div class="col"><div class="time" id="days"></div></div>
-            <div class="col"><div class="time" id="hours"></div></div>
-            <div class="col"><div class="time" id="minutes"></div></div>
-            <div class="col"><div class="time" id="seconds"></div></div>
+        <div class="countdown-box">
+            <h1>Sakaryanın Dilmoya Gitmesine Kalan Süre</h1>
+            <div class="time-container">
+                <div class="time-unit">
+                    <div class="time" id="days"></div>
+                    <div class="time-label">GÜN</div>
+                </div>
+                <div class="time-unit">
+                    <div class="time" id="hours"></div>
+                    <div class="time-label">SAAT</div>
+                </div>
+                <div class="time-unit">
+                    <div class="time" id="minutes"></div>
+                    <div class="time-label">DAKİKA</div>
+                </div>
+                <div class="time-unit">
+                    <div class="time" id="seconds"></div>
+                    <div class="time-label">SANİYE</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="countdown-box">
+            <h1>Sakaryanın Dilmoya Gitmesine Kalan Hafta & Ay</h1>
+            <div class="time-container">
+                <div class="time-unit">
+                    <div class="time" id="week"></div>
+                    <div class="time-label">HAFTA</div>
+                </div>
+                <div class="time-unit">
+                    <div class="time" id="month"></div>
+                    <div class="time-label">AY</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="countdown-box">
+            <h1>İlerleme: <span id="percentage">0</span>%</h1>
+            <div class="progress-container">
+                <div class="progress">
+                    <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"></div>
+                </div>
+                <div class="mt-2" id="days-info"></div>
+            </div>
         </div>
     </div>
 
-    <div class="countdown-box">
-        <h1 style="font-size:35px;">Sakaryanın Dilmoya Gitmesine Kalan Hafta&Ay</h1>
-        <div class="row">
-            <div class="col"><div class="time" id="week"></div></div>
-            <div class="col"><div class="time" id="month"></div></div>
-        </div>
-    </div>
-
-    <div class="countdown-box">
-        <h1 style="font-size:35px;">İlerleme: <span id="percentage">0</span>%<br>
-        <div class="progress-text">
-            
-        </div>
-        <div class="progress">
-            <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated " role="progressbar" style="width: 0%"></div>
-        </div>
-        </div>
-    </div>
-</div>
-
-    <div id="mine-view-container">
-        <button class="close-button" onclick="closeIframe('mine-view-container', 'mineButton')">X</button>
+    <div id="mine-view-container" class="iframe-container">
+        <button class="close-button" onclick="closeIframe('mine-view-container', 'mineButton')">
+            <i class="fas fa-times"></i> Kapat
+        </button>
         <iframe src="Mine.View.html" width="100%" height="100%" style="border: none;"></iframe>
     </div>
-    <div id="snake-game-container">
-        <button class="close-button" onclick="closeIframe('snake-game-container', 'snakeButton')">X</button>
-        <iframe src="snake.html" width="100%" height="100%" style="border: none; overflow: hidden;"></iframe>
+    
+    <div id="snake-game-container" class="iframe-container">
+        <button class="close-button" onclick="closeIframe('snake-game-container', 'snakeButton')">
+            <i class="fas fa-times"></i> Kapat
+        </button>
+        <iframe src="snake.html" width="100%" height="100%" style="border: none;"></iframe>
     </div>
 
-    <button class="dark-mode-button" onclick="toggleDarkMode()">Karanlık Mod</button>
+    <button class="dark-mode-button" onclick="toggleDarkMode()">
+        <i class="fas fa-moon"></i>
+    </button>
 
     <script>
+        // Countdown functions
         function updateCountdown() {
             const targetDate = new Date("2025-06-20T00:00:00");
             const now = new Date();
             const timeDiff = targetDate - now;
-            document.getElementById("days").innerHTML = Math.floor(timeDiff / (1000 * 60 * 60 * 24)) + " Gün";
-            document.getElementById("hours").innerHTML = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) + " Saat";
-            document.getElementById("minutes").innerHTML = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60)) + " Dakika";
-            document.getElementById("seconds").innerHTML = Math.floor((timeDiff % (1000 * 60)) / 1000) + " Saniye";
+            
+            document.getElementById("days").innerHTML = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+            document.getElementById("hours").innerHTML = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            document.getElementById("minutes").innerHTML = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+            document.getElementById("seconds").innerHTML = Math.floor((timeDiff % (1000 * 60)) / 1000);
         }
-        setInterval(updateCountdown, 1000);
-	function updateCCountdown() {
+        
+        function updateCCountdown() {
             const ttargetDate = new Date("2025-06-20T00:00:00");
             const nnow = new Date();
             const ttimeDiff = ttargetDate - nnow;
-	    document.getElementById("week").innerHTML = Math.floor(ttimeDiff / (1000 * 60 * 60 * 24 * 7)) + " Hafta";
-	    document.getElementById("month").innerHTML = (ttimeDiff / (1000 * 60 * 60 * 24 * 30)).toFixed(1) + " Ay";
+            
+            document.getElementById("week").innerHTML = Math.floor(ttimeDiff / (1000 * 60 * 60 * 24 * 7));
+            document.getElementById("month").innerHTML = (ttimeDiff / (1000 * 60 * 60 * 24 * 30)).toFixed(1);
         }
+        
+        // Initialize countdowns
+        updateCountdown();
+        updateCCountdown();
+        setInterval(updateCountdown, 1000);
         setInterval(updateCCountdown, 1000);
 
+        // Iframe toggle functions
         function toggleIframe(containerId, buttonId) {
             const iframeContainer = document.getElementById(containerId);
             const iframeButton = document.getElementById(buttonId);
-            const isVisible = iframeContainer.style.display === "block";
-            document.getElementById("mine-view-container").style.display = "none";
-            document.getElementById("snake-game-container").style.display = "none";
-            document.getElementById("mineButton").style.display = "block";
-            document.getElementById("snakeButton").style.display = "block";
-            iframeContainer.style.display = isVisible ? "none" : "block";
-            iframeButton.style.display = isVisible ? "block" : "none";  // Hide the button when iframe is opened
+            
+            document.querySelectorAll('.iframe-container').forEach(container => {
+                container.style.display = "none";
+            });
+            
+            document.querySelectorAll('.game-button').forEach(button => {
+                button.style.display = "block";
+            });
+            
+            iframeContainer.style.display = iframeContainer.style.display === "block" ? "none" : "block";
+            iframeButton.style.display = iframeContainer.style.display === "block" ? "none" : "block";
         }
 
         function closeIframe(containerId, buttonId) {
             document.getElementById(containerId).style.display = "none";
-            document.getElementById(buttonId).style.display = "block";  // Show the button again
+            document.getElementById(buttonId).style.display = "block";
         }
 
+        // Dark mode toggle
         function toggleDarkMode() {
             const body = document.body;
             const currentTheme = body.getAttribute("data-theme");
+            const darkModeButton = document.querySelector('.dark-mode-button i');
+            
             if (currentTheme === "light") {
                 body.setAttribute("data-theme", "dark");
+                darkModeButton.classList.remove("fa-moon");
+                darkModeButton.classList.add("fa-sun");
             } else {
                 body.setAttribute("data-theme", "light");
+                darkModeButton.classList.remove("fa-sun");
+                darkModeButton.classList.add("fa-moon");
             }
         }
 
+        // Progress bar calculation
         document.addEventListener('DOMContentLoaded', function() {
-            // Tarih aralıklarını belirle
-            const startDate = new Date('2023-09-09'); // Okul başlangıcı (Yıl otomatik ayarlanacak)
-            const endDate = new Date('2024-06-20');   // Okul bitişi (Yıl otomatik ayarlanacak)
-            
-            // Şu anki tarihi al
+            const startDate = new Date('2023-09-09');
+            const endDate = new Date('2024-06-20');
             const currentDate = new Date();
             
-            // Eğer şu anki tarih başlangıçtan önceyse
             if (currentDate < startDate) {
                 startDate.setFullYear(currentDate.getFullYear());
                 endDate.setFullYear(currentDate.getFullYear());
-            }
-            // Eğer şu anki tarih bitişten sonraysa
-            else if (currentDate > endDate) {
-                // Eğer Eylül'den önceyse geçen yılın dönemini göster
-                if (currentDate.getMonth() < 8) { // 8 = Eylül (0-11 arası)
+            } else if (currentDate > endDate) {
+                if (currentDate.getMonth() < 8) {
                     startDate.setFullYear(currentDate.getFullYear() - 1);
                     endDate.setFullYear(currentDate.getFullYear());
                 } else {
-                    // Aksi halde bu yılın dönemini göster
                     startDate.setFullYear(currentDate.getFullYear());
                     endDate.setFullYear(currentDate.getFullYear() + 1);
                 }
             }
             
-            // Toplam gün sayısını hesapla
             const totalDays = (endDate - startDate) / (1000 * 60 * 60 * 24);
-            
-            // Geçen gün sayısını hesapla
             let daysPassed = (currentDate - startDate) / (1000 * 60 * 60 * 24);
-            
-            // Eğer günler negatifse veya tamamlanmışsa düzelt
             daysPassed = Math.max(0, Math.min(daysPassed, totalDays));
-            
-            // Yüzdeyi hesapla
             const percentage = Math.round((daysPassed / totalDays) * 100);
             
-            // DOM elemanlarını güncelle
             document.getElementById('percentage').textContent = percentage;
             document.getElementById('progress-bar').style.width = percentage + '%';
             
-            // Gün bilgisi metni
             const daysText = `Geçen gün: ${Math.floor(daysPassed)} / Toplam gün: ${Math.floor(totalDays)}`;
             document.getElementById('days-info').textContent = daysText;
         });
