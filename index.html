@@ -178,6 +178,17 @@
             <div class="col"><div class="time" id="month"></div></div>
         </div>
     </div>
+
+    <div class="countdown-box">
+        <h1 style="font-size:35px;">İlerleme: <span id="percentage">0</span>%<br>
+        <div class="progress-text">
+            
+        </div>
+        <div class="progress">
+            <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated " role="progressbar" style="width: 0%"></div>
+        </div>
+        </div>
+    </div>
 </div>
 
     <div id="mine-view-container">
@@ -237,6 +248,53 @@
                 body.setAttribute("data-theme", "light");
             }
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tarih aralıklarını belirle
+            const startDate = new Date('2023-09-09'); // Okul başlangıcı (Yıl otomatik ayarlanacak)
+            const endDate = new Date('2024-06-20');   // Okul bitişi (Yıl otomatik ayarlanacak)
+            
+            // Şu anki tarihi al
+            const currentDate = new Date();
+            
+            // Eğer şu anki tarih başlangıçtan önceyse
+            if (currentDate < startDate) {
+                startDate.setFullYear(currentDate.getFullYear());
+                endDate.setFullYear(currentDate.getFullYear());
+            }
+            // Eğer şu anki tarih bitişten sonraysa
+            else if (currentDate > endDate) {
+                // Eğer Eylül'den önceyse geçen yılın dönemini göster
+                if (currentDate.getMonth() < 8) { // 8 = Eylül (0-11 arası)
+                    startDate.setFullYear(currentDate.getFullYear() - 1);
+                    endDate.setFullYear(currentDate.getFullYear());
+                } else {
+                    // Aksi halde bu yılın dönemini göster
+                    startDate.setFullYear(currentDate.getFullYear());
+                    endDate.setFullYear(currentDate.getFullYear() + 1);
+                }
+            }
+            
+            // Toplam gün sayısını hesapla
+            const totalDays = (endDate - startDate) / (1000 * 60 * 60 * 24);
+            
+            // Geçen gün sayısını hesapla
+            let daysPassed = (currentDate - startDate) / (1000 * 60 * 60 * 24);
+            
+            // Eğer günler negatifse veya tamamlanmışsa düzelt
+            daysPassed = Math.max(0, Math.min(daysPassed, totalDays));
+            
+            // Yüzdeyi hesapla
+            const percentage = Math.round((daysPassed / totalDays) * 100);
+            
+            // DOM elemanlarını güncelle
+            document.getElementById('percentage').textContent = percentage;
+            document.getElementById('progress-bar').style.width = percentage + '%';
+            
+            // Gün bilgisi metni
+            const daysText = `Geçen gün: ${Math.floor(daysPassed)} / Toplam gün: ${Math.floor(totalDays)}`;
+            document.getElementById('days-info').textContent = daysText;
+        });
     </script>
 </body>
 </html>
