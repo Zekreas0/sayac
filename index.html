@@ -343,6 +343,9 @@
         <div class="game-menu-item" onclick="openGame('flappy-game-container', 'flappybird/index.html')">
             <i class="fas fa-dove"></i> Flappy Bird
         </div>
+        <div class="game-menu-item" onclick="openGame('pong-game-container', 'pong/index.html')">
+            <i class="fas fa-dove"></i> Pong
+        </div>
     </div>
     
     <a href="doom.html" target="_blank">
@@ -422,6 +425,13 @@
     
     <div id="flappy-game-container" class="iframe-container">
         <button class="close-button" onclick="closeIframe('flappy-game-container')">
+            <i class="fas fa-times"></i> Kapat
+        </button>
+        <iframe src="" width="100%" height="100%" style="border: none;"></iframe>
+    </div>
+
+    <div id="pong-game-container" class="iframe-container">
+        <button class="close-button" onclick="closeIframe('pong-game-container')">
             <i class="fas fa-times"></i> Kapat
         </button>
         <iframe src="" width="100%" height="100%" style="border: none;"></iframe>
