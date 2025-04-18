@@ -175,7 +175,7 @@
             left: 20px;
         }
         
-        #snakeButton {
+        #gamesMenuButton {
             bottom: 20px;
             right: 20px;
         }
@@ -231,7 +231,7 @@
         
         .close-button {
             position: absolute;
-            top: 80px;  /* 20px'den 80px yaparak karanlık mod butonunun altına kaydırdık */
+            top: 80px;
             right: 20px;
             background-color: #f44336;
             color: white;
@@ -246,6 +246,42 @@
             align-items: center;
             gap: 5px;
             box-shadow: var(--box-shadow);
+        }
+        
+        /* Oyun menüsü stilleri */
+        .games-menu {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background-color: var(--card-background);
+            border-radius: 15px;
+            box-shadow: var(--box-shadow);
+            padding: 10px;
+            z-index: 11;
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+            min-width: 200px;
+        }
+        
+        .games-menu.show {
+            display: flex;
+        }
+        
+        .game-menu-item {
+            padding: 10px 15px;
+            border-radius: 8px;
+            background-color: var(--button-color);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.3s;
+        }
+        
+        .game-menu-item:hover {
+            background-color: var(--button-hover);
         }
         
         @media (max-width: 768px) {
@@ -276,8 +312,13 @@
                 left: 10px;
             }
             
-            #snakeButton {
+            #gamesMenuButton {
                 bottom: 70px;
+                right: 10px;
+            }
+            
+            .games-menu {
+                bottom: 130px;
                 right: 10px;
             }
         }
@@ -288,9 +329,21 @@
         <i class="fas fa-bomb"></i> Mayın Tarlası
     </button>
     
-    <button class="game-button" id="snakeButton" onclick="toggleIframe('snake-game-container', 'snakeButton')">
-        <i class="fas fa-snake"></i> Tank Oyunu
+    <button class="game-button" id="gamesMenuButton" onclick="toggleGamesMenu()">
+        <i class="fas fa-gamepad"></i> Oyunlar
     </button>
+    
+    <div class="games-menu" id="gamesMenu">
+        <div class="game-menu-item" onclick="openGame('tank-game-container', 'tank.html')">
+            <i class="fas fa-tank"></i> Tank Oyunu
+        </div>
+        <div class="game-menu-item" onclick="openGame('snake-game-container', 'snake.html')">
+            <i class="fas fa-snake"></i> Yılan Oyunu
+        </div>
+        <div class="game-menu-item" onclick="openGame('flappy-game-container', 'flappy.html')">
+            <i class="fas fa-dove"></i> Flappy Bird
+        </div>
+    </div>
     
     <a href="doom.html" target="_blank">
         <button class="doom-button">
@@ -353,11 +406,25 @@
         <iframe src="minesweeper/index.html" width="80%" height="100%" style="display: block; margin: 0 auto; border: none;"></iframe>
     </div>
     
-    <div id="snake-game-container" class="iframe-container">
-        <button class="close-button" onclick="closeIframe('snake-game-container', 'snakeButton')">
+    <div id="tank-game-container" class="iframe-container">
+        <button class="close-button" onclick="closeIframe('tank-game-container')">
             <i class="fas fa-times"></i> Kapat
         </button>
-        <iframe src="tank.html" width="100%" height="100%" style="border: none;"></iframe>
+        <iframe src="" width="100%" height="100%" style="border: none;"></iframe>
+    </div>
+    
+    <div id="snake-game-container" class="iframe-container">
+        <button class="close-button" onclick="closeIframe('snake-game-container')">
+            <i class="fas fa-times"></i> Kapat
+        </button>
+        <iframe src="" width="100%" height="100%" style="border: none;"></iframe>
+    </div>
+    
+    <div id="flappy-game-container" class="iframe-container">
+        <button class="close-button" onclick="closeIframe('flappy-game-container')">
+            <i class="fas fa-times"></i> Kapat
+        </button>
+        <iframe src="" width="100%" height="100%" style="border: none;"></iframe>
     </div>
 
     <button class="dark-mode-button" onclick="toggleDarkMode()">
@@ -365,7 +432,7 @@
     </button>
 
     <script>
-        // Countdown functions (aynı kalıyor)
+        // Countdown functions
         function updateCountdown() {
             const targetDate = new Date("2025-06-20T00:00:00");
             const now = new Date();
@@ -386,13 +453,34 @@
             document.getElementById("month").innerHTML = (ttimeDiff / (1000 * 60 * 60 * 24 * 30)).toFixed(1);
         }
         
-        // Initialize countdowns (aynı kalıyor)
+        // Initialize countdowns
         updateCountdown();
         updateCCountdown();
         setInterval(updateCountdown, 1000);
         setInterval(updateCCountdown, 1000);
     
-        // Güncellenmiş Iframe fonksiyonları (sadece tank oyunu için yeniden yükleme)
+        // Oyun menüsü fonksiyonları
+        function toggleGamesMenu() {
+            const gamesMenu = document.getElementById('gamesMenu');
+            gamesMenu.classList.toggle('show');
+        }
+        
+        function openGame(containerId, gameUrl) {
+            // Menüyü kapat
+            document.getElementById('gamesMenu').classList.remove('show');
+            
+            // Tüm iframe'leri kapat
+            document.querySelectorAll('.iframe-container').forEach(container => {
+                container.style.display = "none";
+            });
+            
+            // Seçilen oyunu aç
+            const gameContainer = document.getElementById(containerId);
+            const iframe = gameContainer.querySelector('iframe');
+            iframe.src = gameUrl;
+            gameContainer.style.display = "block";
+        }
+        
         function toggleIframe(containerId, buttonId) {
             const iframeContainer = document.getElementById(containerId);
             const iframeButton = document.getElementById(buttonId);
@@ -401,39 +489,23 @@
                 container.style.display = "none";
             });
             
-            document.querySelectorAll('.game-button').forEach(button => {
-                button.style.display = "block";
-            });
-            
             if (iframeContainer.style.display === "block") {
                 iframeContainer.style.display = "none";
                 iframeButton.style.display = "block";
             } else {
-                // SADECE tank oyunu için iframe'i yeniden yükle
-                if (containerId === 'snake-game-container') {
-                    const iframe = iframeContainer.querySelector('iframe');
-                    iframe.src = iframe.src; // Iframe'i yeniden yükle
-                }
-                
                 iframeContainer.style.display = "block";
                 iframeButton.style.display = "none";
             }
         }
     
-        function closeIframe(containerId, buttonId) {
+        function closeIframe(containerId) {
             const iframeContainer = document.getElementById(containerId);
-            
-            // SADECE tank oyunu için iframe'i yeniden yükle
-            if (containerId === 'snake-game-container') {
-                const iframe = iframeContainer.querySelector('iframe');
-                iframe.src = iframe.src; // Iframe'i yeniden yükle
-            }
-            
+            const iframe = iframeContainer.querySelector('iframe');
+            iframe.src = ""; // Iframe'i boşalt
             iframeContainer.style.display = "none";
-            document.getElementById(buttonId).style.display = "block";
         }
     
-        // Dark mode toggle (aynı kalıyor)
+        // Dark mode toggle
         function toggleDarkMode() {
             const body = document.body;
             const currentTheme = body.getAttribute("data-theme");
@@ -450,7 +522,7 @@
             }
         }
     
-        // Progress bar calculation (aynı kalıyor)
+        // Progress bar calculation
         document.addEventListener('DOMContentLoaded', function() {
             const startDate = new Date('2023-09-09');
             const endDate = new Date('2024-06-20');
@@ -479,6 +551,16 @@
             
             const daysText = `Geçen gün: ${Math.floor(daysPassed)} / Toplam gün: ${Math.floor(totalDays)}`;
             document.getElementById('days-info').textContent = daysText;
+        });
+        
+        // Menü dışına tıklandığında menüyü kapat
+        document.addEventListener('click', function(event) {
+            const gamesMenu = document.getElementById('gamesMenu');
+            const gamesMenuButton = document.getElementById('gamesMenuButton');
+            
+            if (!gamesMenu.contains(event.target) && event.target !== gamesMenuButton) {
+                gamesMenu.classList.remove('show');
+            }
         });
     </script>
 </body>
