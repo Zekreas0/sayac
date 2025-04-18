@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sayaç ve Oyunlar</title>
+    <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -288,7 +289,7 @@
     </button>
     
     <button class="game-button" id="snakeButton" onclick="toggleIframe('snake-game-container', 'snakeButton')">
-        <i class="fas fa-snake"></i> Yılan Oyna
+        <i class="fas fa-snake"></i> Tank Oyunu
     </button>
     
     <a href="doom.html" target="_blank">
@@ -356,7 +357,7 @@
         <button class="close-button" onclick="closeIframe('snake-game-container', 'snakeButton')">
             <i class="fas fa-times"></i> Kapat
         </button>
-        <iframe src="snake.html" width="100%" height="100%" style="border: none;"></iframe>
+        <iframe src="tank.html" width="100%" height="100%" style="border: none;"></iframe>
     </div>
 
     <button class="dark-mode-button" onclick="toggleDarkMode()">
@@ -364,7 +365,7 @@
     </button>
 
     <script>
-        // Countdown functions
+        // Countdown functions (aynı kalıyor)
         function updateCountdown() {
             const targetDate = new Date("2025-06-20T00:00:00");
             const now = new Date();
@@ -385,13 +386,13 @@
             document.getElementById("month").innerHTML = (ttimeDiff / (1000 * 60 * 60 * 24 * 30)).toFixed(1);
         }
         
-        // Initialize countdowns
+        // Initialize countdowns (aynı kalıyor)
         updateCountdown();
         updateCCountdown();
         setInterval(updateCountdown, 1000);
         setInterval(updateCCountdown, 1000);
-
-        // Iframe toggle functions
+    
+        // Güncellenmiş Iframe fonksiyonları (sadece tank oyunu için yeniden yükleme)
         function toggleIframe(containerId, buttonId) {
             const iframeContainer = document.getElementById(containerId);
             const iframeButton = document.getElementById(buttonId);
@@ -404,16 +405,35 @@
                 button.style.display = "block";
             });
             
-            iframeContainer.style.display = iframeContainer.style.display === "block" ? "none" : "block";
-            iframeButton.style.display = iframeContainer.style.display === "block" ? "none" : "block";
+            if (iframeContainer.style.display === "block") {
+                iframeContainer.style.display = "none";
+                iframeButton.style.display = "block";
+            } else {
+                // SADECE tank oyunu için iframe'i yeniden yükle
+                if (containerId === 'snake-game-container') {
+                    const iframe = iframeContainer.querySelector('iframe');
+                    iframe.src = iframe.src; // Iframe'i yeniden yükle
+                }
+                
+                iframeContainer.style.display = "block";
+                iframeButton.style.display = "none";
+            }
         }
-
+    
         function closeIframe(containerId, buttonId) {
-            document.getElementById(containerId).style.display = "none";
+            const iframeContainer = document.getElementById(containerId);
+            
+            // SADECE tank oyunu için iframe'i yeniden yükle
+            if (containerId === 'snake-game-container') {
+                const iframe = iframeContainer.querySelector('iframe');
+                iframe.src = iframe.src; // Iframe'i yeniden yükle
+            }
+            
+            iframeContainer.style.display = "none";
             document.getElementById(buttonId).style.display = "block";
         }
-
-        // Dark mode toggle
+    
+        // Dark mode toggle (aynı kalıyor)
         function toggleDarkMode() {
             const body = document.body;
             const currentTheme = body.getAttribute("data-theme");
@@ -429,8 +449,8 @@
                 darkModeButton.classList.add("fa-moon");
             }
         }
-
-        // Progress bar calculation
+    
+        // Progress bar calculation (aynı kalıyor)
         document.addEventListener('DOMContentLoaded', function() {
             const startDate = new Date('2023-09-09');
             const endDate = new Date('2024-06-20');
