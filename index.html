@@ -493,7 +493,7 @@
             const weeks = Math.floor(totalDays / 7);
             const extraDays = totalDays % 7;
         
-            document.getElementById("week").innerHTML = `${weeks} hafta ${extraDays} gün`;
+            document.getElementById("week").innerHTML = `${weeks} hafta<br>${extraDays} gün`;
             
             document.getElementById("month").innerHTML = (ttimeDiff / (1000 * 60 * 60 * 24 * 30)).toFixed(1);
         }
