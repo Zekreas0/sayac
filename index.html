@@ -474,7 +474,7 @@
     <script>
         // Countdown functions
         function updateCountdown() {
-            const targetDate = new Date("2025-06-20T00:00:00");
+            const targetDate = new Date("2025-06-20T10:00:00");
             const now = new Date();
             const timeDiff = targetDate - now;
             
@@ -485,11 +485,11 @@
         }
         
         function updateCCountdown() {
-            const ttargetDate = new Date("2025-06-20T00:00:00");
+            const ttargetDate = new Date("2025-06-20T10:00:00");
             const nnow = new Date();
             const ttimeDiff = ttargetDate - nnow;
             
-            document.getElementById("week").innerHTML = Math.floor(ttimeDiff / (1000 * 60 * 60 * 24 * 7));
+            document.getElementById("week").innerHTML = Math.floor(ttimeDiff / (1000 * 60 * 60 * 24 * 7)).toFixed(1);
             document.getElementById("month").innerHTML = (ttimeDiff / (1000 * 60 * 60 * 24 * 30)).toFixed(1);
         }
         
